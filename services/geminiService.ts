@@ -57,7 +57,7 @@ ${code}
 `;
 };
 
-// Define a type for the review data structure for type safety
+
 export interface ReviewSection {
   category: string;
   feedback: string[];
@@ -80,11 +80,10 @@ export const performCodeReview = async (code: string): Promise<ReviewData> => {
         },
     });
 
-    // The response text should be a JSON string.
+  
     const jsonText = response.text.trim();
     const parsedResponse = JSON.parse(jsonText);
-    
-    // Basic validation, though the schema should enforce this.
+
     if (!parsedResponse.reviewSections) {
         throw new Error("Invalid response format from API.");
     }
@@ -93,7 +92,7 @@ export const performCodeReview = async (code: string): Promise<ReviewData> => {
   } catch (error) {
     console.error("Error calling Gemini API:", error);
     if (error instanceof SyntaxError) {
-        // This catches JSON parsing errors
+    
         return Promise.reject(new Error("Failed to parse the review from Gemini. The response was not valid JSON."));
     }
     if (error instanceof Error) {
